@@ -26,7 +26,7 @@
 │  ├─ jobs.js      정기 작업 로직 (중복 발송 방지)
 │  ├─ works.js     네이버웍스 API 2.0 (서비스 계정 JWT, 메시지 전송, 콜백 서명 검증)
 │  ├─ mail.js      IMAP (imapflow + mailparser, 읽음 표시 안 함)
-│  ├─ mailer.js    SMTP 알림 메일 (nodemailer) + 답장 본문 추출
+│  ├─ mailer.js    SMTP 알림 메일 (nodemailer) + 답장 본문 추출 — 받기/보내기 계정을 따로 둘 수 있음
 │  ├─ notify.js    알림 채널 선택 (네이버웍스 봇 / 이메일)
 │  ├─ calendar.js  나만의 달력 (구글 시트 events 탭): 조회·등록·수정·삭제, iCal 구독 피드
 │  └─ ai/
@@ -37,7 +37,10 @@
 │     └─ claude.js     Anthropic SDK (claude-opus-5, strict tools, manual loop)
 │  └─ gas.js       구글 시트(Apps Script) 클라이언트 + 테스트용 메모리 구현
 ├─ apps-script/Code.gs   시트 백엔드 + 매시간 트리거
-├─ public/               웹페이지 (빌드 없음; 캡처 이미지는 브라우저 안 tesseract.js 로 글자 인식)
+├─ public/               웹페이지 (빌드 없음, 라이트·다크 자동)
+│  ├─ index.html         8개 탭: 대화·오늘·달력·후보·전체·팀원·가져오기·설정
+│  ├─ style.css          디자인 토큰 기반 스타일
+│  └─ app.js             렌더링·동작 (캡처 글자 인식은 AI 키가 없을 때 tesseract.js 로 대체)
 └─ test/                 node --test
 ```
 

@@ -4,110 +4,178 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>업무 비서</title>
-<meta name="description" content="메일·메신저에서 뽑은 할 일과 팀원 업무를 한 화면에서 확인·정리하는 페이지">
+<meta name="description" content="할 일과 일정, 팀원 업무를 한 화면에서 챙기는 개인 업무 비서">
+<meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="업무 비서">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%8B%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%234f46e5'/%3E%3Cpath d='M10 16.5l4 4 8-8.5' stroke='%23fff' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
 </head>
 <body>
-<header class="top">
-  <h1>📋 업무 비서</h1>
-  <div class="top-right"><span id="today"></span> <button id="reload" class="ghost" title="새로고침">↻</button></div>
+
+<header class="app-header">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5 11-11"/></svg></span>
+      <h1>업무 비서</h1>
+    </div>
+    <span class="header-date" id="today"></span>
+    <button id="reload" class="quiet icon" title="새로고침" aria-label="새로고침"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
+  </div>
 </header>
 
-<section id="login" class="card hidden">
-  <h2>PIN 입력</h2>
-  <p class="muted">Vercel 환경변수 ADMIN_PIN 값입니다. 이 기기에 기억됩니다.</p>
-  <form id="login-form"><input id="pin" type="password" inputmode="numeric" placeholder="PIN" autocomplete="current-password"><button>들어가기</button></form>
-  <p id="login-err" class="err"></p>
-</section>
-
-<main id="app" class="hidden">
-  <nav class="tabs">
+<div class="tabbar-wrap" id="tabbar-wrap" hidden>
+  <nav class="tabbar" id="tabbar">
     <button data-tab="chat" class="on">대화</button>
     <button data-tab="today">오늘</button>
     <button data-tab="cal">달력</button>
-    <button data-tab="cands">후보 <b id="n-cands"></b></button>
+    <button data-tab="cands">후보<span class="badge" id="n-cands"></span></button>
     <button data-tab="all">전체</button>
     <button data-tab="team">팀원</button>
     <button data-tab="import">가져오기</button>
-    <button data-tab="check">설정 점검</button>
+    <button data-tab="check">설정</button>
   </nav>
+</div>
 
-  <section id="tab-chat" class="tab">
-    <div id="chat-log" class="chat-log"></div>
-    <div class="chips" id="chips">
-      <button class="chip" data-say="정리">정리 시작</button><button class="chip" data-say="오늘">오늘</button><button class="chip" data-say="목록">목록</button><button class="chip" data-say="후보">후보</button><button class="chip" data-say="팀">팀</button><button class="chip" data-say="브리핑">브리핑</button><button class="chip" data-say="보고">일일보고 초안</button><button class="chip" data-say="도움말">도움말</button>
-    </div>
-    <form id="chat-form" class="chat-form"><textarea id="chat-input" rows="2" placeholder="할 일을 적거나, '정리'라고 말을 걸어 보세요. (Enter: 보내기, Shift+Enter: 줄바꿈)"></textarea><button>보내기</button></form>
-  </section>
+<main class="wrap">
 
-  <section id="tab-today" class="tab hidden">
-    <form id="quick" class="card row">
-      <input id="q-title" placeholder="할 일 추가  예) A사 견적서 보내기 ~금요일  @김철수" required>
-      <button>추가</button>
-    </form>
-    <div id="today-list"></div>
-  </section>
-
-  <section id="tab-cal" class="tab hidden">
-    <div class="cal-head"><button class="ghost" id="cal-prev">‹</button><b id="cal-title"></b><button class="ghost" id="cal-next">›</button><button class="ghost small" id="cal-today">오늘</button></div>
-    <div class="cal-grid" id="cal-grid"></div>
-    <div class="card">
-      <div class="row" style="justify-content:space-between"><b id="cal-day-title"></b></div>
-      <div id="cal-day-list"></div>
-      <form id="ev-add" class="row" style="margin-top:8px">
-        <input id="ev-title" placeholder="일정 제목" required style="flex:2;min-width:140px">
-        <input id="ev-time" placeholder="시각 (예: 15:00, 오후 3시, 비우면 종일)" style="flex:1;min-width:120px">
-        <input id="ev-loc" placeholder="장소(선택)" style="flex:1;min-width:100px">
-        <button>추가</button>
+  <section id="login" class="login-wrap hidden">
+    <div class="card login-card">
+      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5 11-11"/></svg></span>
+      <h2>업무 비서</h2>
+      <p class="muted small">PIN 을 입력하세요. 이 기기에 기억됩니다.</p>
+      <form id="login-form">
+        <input id="pin" type="password" inputmode="numeric" placeholder="••••" autocomplete="current-password" aria-label="PIN">
+        <button>열기</button>
       </form>
-      <p class="muted small">폰 기본 캘린더에서 보려면 '설정 점검'의 icalUrl 주소를 캘린더 앱에 '구독'으로 추가하세요.</p>
+      <p id="login-err" class="err small" style="margin-top:10px"></p>
     </div>
   </section>
 
-  <section id="tab-cands" class="tab hidden">
-    <p class="muted">메일·메신저·카톡에서 자동으로 뽑힌 항목입니다. <b>확정</b>하면 진행 목록에 들어가고, <b>무시</b>하면 사라집니다.</p>
-    <div id="cands-list"></div>
-  </section>
+  <div id="app" class="hidden">
 
-  <section id="tab-all" class="tab hidden">
-    <div class="row filters">
-      <select id="f-status"><option value="진행">진행</option><option value="보류">보류</option><option value="완료">완료</option><option value="">모두</option></select>
-      <select id="f-owner"><option value="">담당 전체</option></select>
-      <input id="f-q" placeholder="검색">
-    </div>
-    <div id="all-list"></div>
-  </section>
+    <section id="tab-chat" class="tab">
+      <div id="chat-log" class="chat-log"></div>
+      <div class="chips" id="chips">
+        <button class="chip" data-say="정리">할 일 정리</button>
+        <button class="chip" data-say="오늘">오늘</button>
+        <button class="chip" data-say="목록">목록</button>
+        <button class="chip" data-say="후보">후보</button>
+        <button class="chip" data-say="팀">팀</button>
+        <button class="chip" data-say="브리핑">브리핑</button>
+        <button class="chip" data-say="보고">일일보고 초안</button>
+        <button class="chip" data-say="도움말">도움말</button>
+      </div>
+      <form id="chat-form" class="composer">
+        <div class="box">
+          <textarea id="chat-input" rows="1" placeholder="할 일을 적거나 말을 걸어 보세요"></textarea>
+        </div>
+        <button class="send" aria-label="보내기" title="보내기 (Enter)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12h14"/><path d="M13 6.5l5.5 5.5-5.5 5.5"/></svg></button>
+      </form>
+    </section>
 
-  <section id="tab-team" class="tab hidden">
-    <form id="team-add" class="card row"><input id="t-name" placeholder="팀원 이름" required><input id="t-email" type="email" placeholder="이메일 (리마인드·보고 요청용)"><input id="t-role" placeholder="직급(선택)"><button>등록</button></form>
-    <div id="team-list"></div>
-    <div id="reports"></div>
-  </section>
+    <section id="tab-today" class="tab hidden">
+      <form id="quick" class="card row">
+        <input id="q-title" placeholder="할 일 추가  예) A사 견적서 ~금요일 @김철수" required aria-label="할 일 추가">
+        <button aria-label="추가"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>추가</button>
+      </form>
+      <div id="today-list"></div>
+    </section>
 
-  <section id="tab-import" class="tab hidden">
-    <div class="card">
-      <h3>화면 캡처 넣기 (카톡·네이버웍스·메일)</h3>
-      <p class="muted">캡처 이미지를 올리면 글자를 읽어 아래 글상자에 넣습니다. Gemini 키가 있으면 AI가 읽고(정확함, 이미지가 Google로 전송됨), 없으면 이 브라우저 안에서만 읽습니다(덜 정확함). 읽은 글을 확인·수정한 뒤 "미리보기"를 누르세요.</p>
-      <div class="row"><input type="file" id="shot-file" accept="image/*" multiple><span id="ocr-status" class="muted small"></span></div>
-    </div>
-    <div class="card">
-      <h3>카카오톡 대화 가져오기</h3>
-      <p class="muted">카카오톡 PC → 채팅방 → 메뉴(≡) → 대화 내용 → <b>대화 내보내기</b>로 저장한 txt 파일을 올리거나, 대화를 복사해 아래에 붙여넣으세요. 내용은 이 서버(내 Vercel)와 내 구글 시트에만 저장됩니다.</p>
-      <div class="row"><input type="file" id="kakao-file" accept=".txt,text/plain"><label>최근 <input id="kakao-days" type="number" value="14" min="1" max="90" style="width:4em"> 일만</label></div>
-      <textarea id="import-text" rows="8" placeholder="여기에 카톡 대화(내보내기 형식) 또는 아무 글이나 붙여넣기"></textarea>
-      <div class="row"><label><input type="radio" name="kind" value="text" checked> 그냥 글 / 캡처 / 대화 복사</label><label><input type="radio" name="kind" value="kakao"> 카톡 내보내기 txt</label></div>
-      <div class="row"><button id="import-preview" class="ghost">미리보기</button><button id="import-run">후보로 저장</button></div>
-      <div id="import-result"></div>
-    </div>
-  </section>
+    <section id="tab-cal" class="tab hidden">
+      <div class="cal-head">
+        <button class="quiet icon" id="cal-prev" aria-label="이전 달"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <span class="title" id="cal-title"></span>
+        <button class="quiet icon" id="cal-next" aria-label="다음 달"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        <button class="ghost sm" id="cal-today">오늘</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="card" style="margin-top:12px">
+        <div class="card-head"><b id="cal-day-title"></b></div>
+        <div id="cal-day-list"></div>
+        <hr class="divider">
+        <form id="ev-add" class="row">
+          <input id="ev-title" placeholder="일정 제목" required style="flex:2 1 150px" aria-label="일정 제목">
+          <input id="ev-time" placeholder="시각 (오후 3시 / 비우면 종일)" style="flex:1 1 130px" aria-label="시각">
+          <input id="ev-loc" placeholder="장소" style="flex:1 1 100px" aria-label="장소">
+          <button>추가</button>
+        </form>
+        <p class="hint">폰 기본 캘린더에서도 보려면 <b>설정</b> 탭의 <code>icalUrl</code> 주소를 캘린더 앱에 '구독'으로 추가하세요.</p>
+      </div>
+    </section>
 
-  <section id="tab-check" class="tab hidden">
-    <div class="card"><button id="check-run">연결 상태 확인</button><pre id="check-out" class="pre"></pre></div>
-    <div class="card muted small">
-      <b>봇 명령 요약</b><br>정리 · 할일 내용 ~날짜 · 지시 이름 내용 ~날짜 · 목록 · 오늘 · 팀 · 후보 · 완료 N · 확정 N · 무시 N · 미룸 N 날짜 · 브리핑 · 보고 · 도움말
-    </div>
-  </section>
+    <section id="tab-cands" class="tab hidden">
+      <div class="card">
+        <div class="card-head"><b>확인이 필요한 후보</b></div>
+        <p class="muted small">메일·메신저·캡처에서 자동으로 뽑은 항목입니다. <b>확정</b>하면 진행 목록으로 가고, <b>무시</b>하면 사라집니다.</p>
+      </div>
+      <div id="cands-list"></div>
+    </section>
+
+    <section id="tab-all" class="tab hidden">
+      <div class="card row">
+        <select id="f-status" aria-label="상태"><option value="진행">진행</option><option value="보류">보류</option><option value="완료">완료</option><option value="">모든 상태</option></select>
+        <select id="f-owner" aria-label="담당"><option value="">담당 전체</option></select>
+        <input id="f-q" placeholder="검색" aria-label="검색" style="flex:1 1 120px">
+      </div>
+      <div id="all-list"></div>
+    </section>
+
+    <section id="tab-team" class="tab hidden">
+      <form id="team-add" class="card row">
+        <input id="t-name" placeholder="이름" required style="flex:1 1 90px" aria-label="팀원 이름">
+        <input id="t-email" type="email" placeholder="이메일 (리마인드용)" style="flex:2 1 160px" aria-label="이메일">
+        <input id="t-role" placeholder="직급" style="flex:1 1 80px" aria-label="직급">
+        <button>등록</button>
+      </form>
+      <div id="team-list"></div>
+      <div id="reports"></div>
+    </section>
+
+    <section id="tab-import" class="tab hidden">
+      <div class="card">
+        <div class="card-head"><b>화면 캡처 넣기</b></div>
+        <p class="muted small">카톡·메신저·메일 화면을 캡처해 올리면 글자를 읽어 아래 글상자에 넣습니다. AI 키가 있으면 AI 가 읽고(정확함), 없으면 이 브라우저 안에서만 읽습니다(덜 정확함).</p>
+        <div class="row" style="margin-top:10px"><input type="file" id="shot-file" accept="image/*" multiple aria-label="캡처 이미지"></div>
+        <p class="hint" id="ocr-status"></p>
+      </div>
+      <div class="card">
+        <div class="card-head"><b>대화·글에서 할 일 찾기</b></div>
+        <p class="muted small">카카오톡 PC → 채팅방 → 메뉴(≡) → 대화 내용 → <b>대화 내보내기</b> 로 저장한 txt 를 올리거나, 아무 글이나 붙여넣으세요.</p>
+        <div class="row" style="margin-top:10px">
+          <input type="file" id="kakao-file" accept=".txt,text/plain" style="flex:2 1 180px" aria-label="카카오톡 txt">
+          <label class="nowrap">최근 <input id="kakao-days" type="number" value="14" min="1" max="90" style="width:58px;padding:6px 8px"> 일</label>
+        </div>
+        <textarea id="import-text" rows="7" placeholder="여기에 대화나 메일 본문을 붙여넣기" style="margin-top:10px"></textarea>
+        <div class="row">
+          <label><input type="radio" name="kind" value="text" checked> 일반 글·캡처·대화 복사</label>
+          <label><input type="radio" name="kind" value="kakao"> 카톡 내보내기 txt</label>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button id="import-preview" class="ghost">미리보기</button>
+          <button id="import-run">후보로 저장</button>
+        </div>
+        <div id="import-result"></div>
+      </div>
+    </section>
+
+    <section id="tab-check" class="tab hidden">
+      <div class="card">
+        <div class="card-head"><b>연결 상태</b><button id="check-run" class="ghost sm">확인</button></div>
+        <p class="muted small">구글 시트·메일·AI·달력이 제대로 붙어 있는지 한 번에 봅니다.</p>
+        <pre id="check-out" class="pre"></pre>
+      </div>
+      <div class="card">
+        <div class="card-head"><b>대화에서 쓰는 말</b></div>
+        <p class="muted small">정리 · 할일 〈내용〉 ~〈날짜〉 · 지시 〈이름〉 〈내용〉 · 목록 · 오늘 · 팀 · 후보 · 완료 N · 확정 N · 무시 N · 미룸 N 〈날짜〉 · 담당 N 〈이름〉 · 브리핑 · 보고 · 도움말</p>
+        <p class="hint">AI 키를 넣었다면 이런 형식을 몰라도 됩니다. "내일 3시 A사 미팅 잡아줘" 처럼 그냥 말하면 됩니다.</p>
+      </div>
+    </section>
+
+  </div>
 </main>
 
 <div id="toast" class="toast hidden"></div>

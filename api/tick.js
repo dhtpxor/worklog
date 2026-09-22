@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   const gas = new GasClient();
   const works = new WorksClient();
   try {
-    const out = await runTick({ gas, works, mailer: new Mailer(), cal: new SheetCalendar({ gas }), cfg: env, fetchMail: env.MAIL_ENABLED ? fetchNewMail : null, force: String(req.query?.force || "") });
+    const out = await runTick({ gas, works, mailer: new Mailer(), cal: new SheetCalendar({ gas }), cfg: env, fetchMail: env.IMAP_ENABLED ? fetchNewMail : null, force: String(req.query?.force || "") });
     return res.status(200).json({ ok: true, ...out });
   } catch (e) {
     await gas.log("tick_error", e.message);

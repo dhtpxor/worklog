@@ -6,7 +6,7 @@ import { MemoryMailer, stripReply } from "../lib/mailer.js";
 import { handleEvent } from "../lib/commands.js";
 import { runTick } from "../lib/jobs.js";
 
-const cfg = { OWNER_NAME: "박팀장", ADMIN_PIN: "1234", WORKDAYS: [1, 2, 3, 4, 5], BRIEF_HOUR: 8, REMIND_HOUR: 9, ASK_HOUR: 17, EVENING_HOUR: 18, MAIL_ENABLED: true, MAIL_USER: "me@x.com", WORKS_ENABLED: false };
+const cfg = { OWNER_NAME: "박팀장", ADMIN_PIN: "1234", WORKDAYS: [1, 2, 3, 4, 5], BRIEF_HOUR: 8, REMIND_HOUR: 9, ASK_HOUR: 17, EVENING_HOUR: 18, IMAP_ENABLED: true, SMTP_ENABLED: true, IMAP_USER: "me@x.com", SMTP_USER: "me@x.com", WORKS_ENABLED: false };
 const now = new Date("2026-09-22T01:00:00Z"); // KST 10:00 화
 const web = (gas, mailer, text) => handleEvent({ event: { type: "message", source: { userId: "web" }, content: { type: "text", text } }, gas, mailer, cfg, now, forceOwner: true });
 
@@ -40,13 +40,13 @@ test("정기 작업: 브리핑·초안은 내 메일로, 팀원 리마인드·�
   await web(gas, mailer, "지시 김철수 견적서 작성 ~어제");
   await web(gas, mailer, "할일 보고서 작성 ~오늘");
   mailer.sent.length = 0;
-  let out = await runTick({ gas, works, mailer, cfg: { ...cfg, MAIL_ENABLED: false }, now });
+  let out = await runTick({ gas, works, mailer, cfg: { ...cfg, IMAP_ENABLED: false }, now });
   assert.deepEqual(out.done, ["brief:mail", "remind:1"]);
   assert.equal(mailer.sent[0].to, "me@x.com"); assert.match(mailer.sent[0].subject, /아침 브리핑/); assert.match(mailer.sent[0].text, /오늘 마감/);
   assert.equal(mailer.sent[1].to, "kim@x.com"); assert.match(mailer.sent[1].text, /1일 지남/);
 
   // 17시 보고 요청 메일
-  out = await runTick({ gas, works, mailer, cfg: { ...cfg, MAIL_ENABLED: false }, now: new Date("2026-09-22T08:30:00Z") });
+  out = await runTick({ gas, works, mailer, cfg: { ...cfg, IMAP_ENABLED: false }, now: new Date("2026-09-22T08:30:00Z") });
   assert.ok(out.done.includes("ask:1"));
   const ask = mailer.sent.at(-1);
   assert.match(ask.subject, /\[업무비서 보고\]/); assert.match(ask.text, /답장/);

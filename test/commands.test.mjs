@@ -5,7 +5,7 @@ import { MemoryWorks } from "../lib/works.js";
 import { handleEvent } from "../lib/commands.js";
 import { runTick } from "../lib/jobs.js";
 
-const cfg = { OWNER_NAME: "박팀장", ADMIN_PIN: "1234", WORKDAYS: [1, 2, 3, 4, 5], BRIEF_HOUR: 8, REMIND_HOUR: 9, ASK_HOUR: 17, EVENING_HOUR: 18, MAIL_ENABLED: false, WORKS_ENABLED: true };
+const cfg = { OWNER_NAME: "박팀장", ADMIN_PIN: "1234", WORKDAYS: [1, 2, 3, 4, 5], BRIEF_HOUR: 8, REMIND_HOUR: 9, ASK_HOUR: 17, EVENING_HOUR: 18, IMAP_ENABLED: false, WORKS_ENABLED: true };
 const now = new Date("2026-09-22T01:00:00Z"); // KST 10:00 화
 const msg = (userId, text, channelId) => ({ type: "message", source: { userId, channelId }, content: { type: "text", text } });
 
@@ -137,7 +137,7 @@ test("메일 수집 → 후보", async () => {
     { uid: 9, subject: "RE: 계약서 검토 요청", from: "a@x.com", fromName: "A사 김대리", date: "2026-09-22T00:00:00Z", text: "9/30까지 검토 부탁드립니다." },
     { uid: 10, subject: "(광고) 세일", from: "noreply@shop.com", fromName: "shop", date: "2026-09-22T00:00:00Z", text: "지금 신청하세요" },
   ] });
-  const out = await runTick({ gas, works, cfg: { ...cfg, MAIL_ENABLED: true, MAIL_USER: "me@x.com" }, fetchMail, now: new Date("2026-09-22T12:00:00Z") });
+  const out = await runTick({ gas, works, cfg: { ...cfg, IMAP_ENABLED: true, SMTP_ENABLED: true, IMAP_USER: "me@x.com", SMTP_USER: "me@x.com" }, fetchMail, now: new Date("2026-09-22T12:00:00Z") });
   assert.ok(out.done[0].includes("후보 1건"), out.done.join());
   assert.equal(gas.tasks[0].title, "계약서 검토 요청");
   assert.equal(gas.tasks[0].due, "2026-09-30");
