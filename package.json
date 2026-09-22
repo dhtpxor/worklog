@@ -1,0 +1,21 @@
+{
+  "name": "worklog-todo-bot",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "메일플러그·네이버웍스·카카오톡 대화에서 할 일을 자동으로 뽑아 구글 시트에 쌓고, 네이버웍스 봇으로 아침 브리핑/팀원 리마인드를 보내는 자동화",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0",
+    "imapflow": "^1.0.164",
+    "mailparser": "^3.7.1",
+    "nodemailer": "^6.10.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

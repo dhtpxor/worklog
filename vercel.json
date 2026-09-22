@@ -1,0 +1,9 @@
+{
+  "crons": [
+    { "path": "/api/tick", "schedule": "0 23 * * *" }
+  ],
+  "functions": {
+    "api/tick.js": { "maxDuration": 60 },
+    "api/import.js": { "maxDuration": 30 }
+  }
+}
