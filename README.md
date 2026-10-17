@@ -4,6 +4,8 @@
 
 설치는 **[SETUP.md](./SETUP.md)** 를 따라가세요 (비개발자용, 단계별).
 
+> 이 저장소에는 별도 앱 **[trueunit/](./trueunit/README.md)** (거래 시점 진품 판정·보증 플랫폼 MVP)도 들어 있습니다. 기획안은 [docs/ideas](./docs/ideas/anti-counterfeit-transaction-authenticity-platform.md)에 있습니다.
+
 ## 구성
 
 ```

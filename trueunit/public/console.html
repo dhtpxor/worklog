@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrueUnit 검수 콘솔</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">TU</span><span>TrueUnit 검수 콘솔</span></div>
+      <span class="spacer"></span>
+      <span id="who" class="small muted"></span>
+      <button class="btn small hidden" id="logout">나가기</button>
+    </div>
+    <nav class="tabs hidden" id="tabs" role="tablist">
+      <button class="tab" role="tab" data-view="queue">검수 대기</button>
+      <button class="tab" role="tab" data-view="cases">전체 거래</button>
+      <button class="tab" role="tab" data-view="claims">보증 청구</button>
+      <button class="tab admin-only" role="tab" data-view="metrics">지표</button>
+      <button class="tab admin-only" role="tab" data-view="settings">설정</button>
+      <button class="tab" role="tab" data-view="guide">연동 안내</button>
+    </nav>
+  </header>
+  <main id="main"></main>
+  <script src="/console.js" type="module"></script>
+</body>
+</html>
