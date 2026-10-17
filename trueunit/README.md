@@ -38,6 +38,24 @@ npm start
 npm test   # 단위·통합 테스트 (AI 는 가짜 클라이언트로 대체)
 ```
 
+## 서버에 올리기 (Docker)
+
+저장소의 `Dockerfile` 로 어느 호스팅에나 올릴 수 있습니다. 이 이미지는 빌드·실행·헬스체크·재시작 후 데이터 유지까지 확인했습니다.
+
+```bash
+docker build -t trueunit .
+docker run -d --name trueunit -p 8787:8787 -v trueunit-data:/data \
+  -e ANTHROPIC_API_KEY=sk-ant-... -e PUBLIC_BASE_URL=https://내도메인 trueunit
+docker logs trueunit   # 첫 실행 때 키 3개가 한 번만 출력됩니다
+```
+
+호스팅에 올릴 때 지켜야 할 것
+- **`/data` 에 영구 디스크(볼륨)를 붙여야 합니다.** 붙이지 않으면 재시작·재배포 때 거래 건, 사진, 키가 모두 사라집니다.
+- 그래서 디스크가 없는 무료 플랜(잠들었다 깨는 방식 포함)은 시연용으로만 쓸 수 있습니다.
+- Render 는 Docker 웹 서비스 + Disk(마운트 경로 `/data`), Railway 는 Docker 서비스 + Volume(`/data`) 으로 설정합니다. 저장소의 `trueunit` 폴더를 루트 디렉터리로 지정합니다.
+- 환경변수 `ANTHROPIC_API_KEY`, `PUBLIC_BASE_URL` 을 호스팅 설정 화면에서 넣습니다. `PORT` 는 호스팅이 정해 주는 값을 그대로 씁니다.
+- 첫 실행 키는 호스팅의 로그 화면에 한 번 출력됩니다. 보관한 뒤에는 로그 보존 기간을 확인하세요.
+
 ## 흐름
 
 ```
