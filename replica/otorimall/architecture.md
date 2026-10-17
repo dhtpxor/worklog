@@ -42,7 +42,7 @@ Date: 2026-10-17 · 입력: `replica/recon.md`, `replica/features.csv`, `replica
 
 ## 2. Schema
 
-Tables: 25. Access rules: Supabase RLS. `profiles`·`addresses`·`carts`·`orders`·`claims`·`tickets`·`reviews`·`likes`·`restock_alerts`·`user_coupons`·`point_ledger`·`notifications`는 `user_id = auth.uid()`만 읽기/쓰기, 관리자(`profiles.role = 'admin'`)는 전부. `products`·`product_options`·`categories`·`coupons`(공개 쿠폰)·`price_history`·`policy_pages`는 공개 읽기, 관리자만 쓰기. `suppliers`·`supplier_products`·`settlements`는 관리자만. 전체 SQL은 `schema.sql`.
+Tables: 32. Access rules: Supabase RLS. `profiles`·`addresses`·`carts`·`orders`·`claims`·`tickets`·`reviews`·`likes`·`restock_alerts`·`user_coupons`·`point_ledger`·`notifications`는 `user_id = auth.uid()`만 읽기/쓰기, 관리자(`profiles.role = 'admin'`)는 전부. `products`·`product_options`·`categories`·`coupons`(공개 쿠폰)·`price_history`·`policy_pages`는 공개 읽기, 관리자만 쓰기. `suppliers`·`supplier_products`·`settlements`는 관리자만. 전체 SQL은 `schema.sql`.
 
 핵심 제약(UI가 아니라 DB가 막아야 하는 것):
 - 재고 초과 주문: `product_options.stock` 차감은 `update ... where stock >= qty` 한 문장으로, 0행이면 실패.

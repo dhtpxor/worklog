@@ -1,0 +1,11 @@
+:root{
+  --bg:#F7F7F5; --surface:#ECEDEA; --surface-raised:#FFFFFF; --border:#D6D8D4; --border-input:#7C8288;
+  --text:#1C1F22; --text-muted:#5E656B; --accent:#4A5868; --on-accent:#FFFFFF; --ink:#1C1F22; --on-ink:#FFFFFF;
+  --danger:#B9321F; --success:#2F6B4F; --warning:#8A5A00;
+  --font-sans:"Paperlogy","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-7:32px; --space-8:48px; --space-9:64px;
+  --radius-sm:4px; --radius-md:8px; --radius-sheet:16px; --radius-pill:999px;
+  --shadow-sheet:0 -12px 40px rgba(20,22,24,.14); --shadow-drawer:-20px 0 60px rgba(0,0,0,.12);
+  --motion-fast:120ms; --motion-base:220ms; --ease:cubic-bezier(.2,.8,.2,1);
+  --layout-maxw:1180px; --layout-header:56px; --layout-tabbar:56px; --layout-buybar:72px;
+}
