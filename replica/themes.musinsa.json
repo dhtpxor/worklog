@@ -1,0 +1,33 @@
+{
+  "_about": "replica-entrepreneur themes.json을 무신사(한국 패션 커머스)용으로 바꾼 것. 한국어는 단어 경계(\\b)가 동작하지 않으므로 경계 없이 매칭한다.",
+  "request_patterns": [
+    "돌려주세요", "되돌려", "해주세요", "해줬으면", "있었으면", "없어서", "불가", "안 ?됨", "안 ?되", "못 ?(하|지우|받)",
+    "\\bi wish\\b", "\\bplease add\\b", "\\bwould be (nice|great|good|helpful)\\b", "\\bno way to\\b", "\\bdoesn'?t (have|support|let|allow)\\b", "\\bwhy (can'?t|isn'?t|doesn'?t)\\b"
+  ],
+  "themes": [
+    {"id": "returns", "label": "반품·교환·환불 처리 (청약철회 거부, 검수·환불 지연, 반품비)", "kind": "complaint",
+     "patterns": ["반품", "환불", "교환", "회수", "검수", "청약철회", "\\brefund", "\\breturn"]},
+    {"id": "support", "label": "고객센터 불통, 늦고 형식적인 답변", "kind": "complaint",
+     "patterns": ["고객센터", "상담", "문의", "연결", "답변", "답만 반복", "customer (service|support)", "\\bsupport\\b", "help center"]},
+    {"id": "delivery", "label": "배송 지연, 도착 보장 불이행, 보상 실효성", "kind": "complaint",
+     "patterns": ["배송 ?지연", "배송지연", "발송", "택배", "도착", "미발송", "\\bshipping\\b", "\\bdeliver", "\\barrive", "not received", "still not"]},
+    {"id": "sizing", "label": "실측·사이즈 불일치", "kind": "complaint",
+     "patterns": ["실측", "사이즈", "치수", "핏", "체형", "\\bsize", "\\bfit\\b"]},
+    {"id": "quality", "label": "품질·불량·오배송·가품", "kind": "complaint",
+     "patterns": ["품질", "불량", "오염", "중고품", "수선증", "가품", "정품", "짝퉁", "오배송", "단종", "\\bquality\\b", "\\bfake\\b", "\\bdefect"]},
+    {"id": "pricing", "label": "가격·할인 신뢰 (가격 부풀리기, 수수료, 오류 취소)", "kind": "complaint",
+     "patterns": ["가격", "비싸", "수수료", "할인", "꼼수", "판매가", "노이즈 마케팅", "\\bpric", "\\bexpensive\\b", "\\bduties\\b"]},
+    {"id": "benefits", "label": "등급·적립금·쿠폰 혜택 축소와 불투명", "kind": "complaint",
+     "patterns": ["등급", "적립금", "포인트", "회원제", "혜택", "개악", "축소", "쿠폰", "휴지조각", "농락"]},
+    {"id": "updates", "label": "업데이트·개편 후 더 불편해짐", "kind": "complaint",
+     "patterns": ["업뎃", "업데이트", "이전 버전", "되돌려", "개편", "PC 화면", "복잡", "뒤로가기", "\\bredesign", "\\bupdate\\b"]},
+    {"id": "ads", "label": "광고·배너", "kind": "complaint",
+     "patterns": ["광고", "배너", "\\bads\\b"]},
+    {"id": "cancel", "label": "주문 취소 거부·일방적 취소", "kind": "complaint",
+     "patterns": ["취소", "\\bcancel"]},
+    {"id": "reviews", "label": "후기 제도 불신 (적립금 조건, 삭제 제한)", "kind": "complaint",
+     "patterns": ["후기", "리뷰", "\\breview"]},
+    {"id": "bugs", "label": "앱 오류·로그아웃", "kind": "complaint",
+     "patterns": ["튕김", "오류", "로그아웃", "로그인", "\\bcrash", "logs? (me )?out", "\\bbug"]}
+  ]
+}

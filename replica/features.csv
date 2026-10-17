@@ -69,3 +69,15 @@ Offline store integration and offline review points,offline,could,yes,skip,매�
 Global shipping with duties,global,could,yes,skip,법률·물류 범위 밖
 Used goods marketplace (유즈드),marketplace,could,yes,skip,별도 서비스
 Brand and product catalogue data itself,data,must,yes,skip,무신사 소유; 파트너 센터로 채움
+Return timeline with promised refund date and auto-compensation when inspection SLA is missed,orders,must,no,no,entrepreneur fix 1; 근거 반품·환불 6건/6출처
+Round-trip return fee shown on product page and cart before purchase,product,must,no,no,entrepreneur fix 1
+Return rejection requires photo evidence from seller,orders,should,no,no,entrepreneur fix 1
+Promised arrival date with automatic delay compensation (no claim needed),orders,must,no,no,entrepreneur fix 2; 근거 배송 5건/4출처
+Unscanned-tracking detection: show "not yet shipped" and allow cancel,orders,should,no,no,entrepreneur fix 2
+Support ticket with status tracking and expected reply time,support,must,no,no,entrepreneur fix 3; 근거 고객센터 5건/4출처
+Published human-support SLA (24h) and chat-first queue with order context auto-attached,support,should,no,no,entrepreneur fix 3
+Buyer-measured size reports collected in review flow,reviews,should,no,no,entrepreneur fix 4; 근거 사이즈 4건/3출처
+Measurement variance badge on product and free return when variance exceeds threshold,product,should,no,no,entrepreneur fix 4
+Public level and point formula page with 60-day notice before changes,account,should,no,no,entrepreneur fix 5; 근거 혜택 5건/4출처
+Coupon issuance capped by live stock,account,should,no,no,entrepreneur fix 5
+30-day lowest price shown on product page,product,could,no,no,entrepreneur fix 5 (thin 가격 주제)
