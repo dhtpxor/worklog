@@ -1,0 +1,71 @@
+feature,area,priority,original,clone,notes
+Sign up with email and social login,onboarding,must,yes,no,추천인 코드 입력 포함
+Signup welcome coupon auto-issued,onboarding,must,yes,no,F09
+Store home with banners and personalized recommendations,discovery,must,yes,no,S01; 추천은 단순 규칙으로 시작
+Category tree browsing with gender toggle,discovery,must,yes,no,S02 S03
+Product list with filters (color size price brand exclusive new),discovery,must,yes,no,S03; 실측 필터는 should
+Product list sorting (popular price-low price-high newest most-reviewed),discovery,must,yes,no,정렬 목록은 공식 미확인
+Keyword search with autocomplete and recent/popular queries,discovery,must,yes,no,S04
+Ranking by period (realtime daily weekly monthly) with gender/age filter,discovery,must,yes,no,S05; 집계식 매출·수량·조회·후기
+Brand directory and brand home page,discovery,must,yes,no,S06 S07
+Product detail with image gallery price and discount rate,product,must,yes,no,S08
+Product options (color size) with stock and sold-out state,product,must,yes,no,S08
+Size chart (brand table) on product page,product,must,yes,no,S08
+Review summary with star rating and size feedback on product page,product,must,yes,no,S08 S09
+Review list with type tabs photo filter and sort,product,must,yes,no,S09
+Like (heart) on product brand and snap,engagement,must,yes,no,S17 3탭
+Cart with option change quantity and partial select,checkout,must,yes,no,S10
+Checkout with address selection,checkout,must,yes,no,S11
+Apply product coupon and cart coupon at checkout,checkout,must,yes,no,중복 적용 규칙 정의 필요
+Use points (적립금) at checkout,checkout,must,yes,no,최소 사용 금액 미확인
+Member level discount auto-applied,checkout,must,yes,no,레벨 1~9; 수치는 레벨 9만 확인
+Payment via external PG (card easy-pay bank),checkout,must,yes,no,무신사페이 대신 PG
+Order complete page,checkout,must,yes,no,S12
+Order history and detail with status timeline,orders,must,yes,no,S13
+Shipment tracking link,orders,must,yes,no,S13
+Cancel order before shipping,orders,must,yes,no,S14
+Exchange request with pickup or self-ship and fee payment,orders,must,yes,no,S14; 반송장 9일 기한
+Return and refund request,orders,must,yes,no,S14; 기간 7일(하자 30일 자료 상이)
+Write review (general / one-month / style) with photos and size feedback,reviews,must,yes,no,S20
+Review point reward with photo bonus and cap per product,reviews,should,yes,no,상품당 최대 3500원
+Review moderation (blind reject for policy violation),reviews,should,yes,no,관리자 큐
+Coupon wallet with code registration,account,must,yes,no,S18
+Point ledger with expiry,account,must,yes,no,S19; 5년 유효
+My page hub (level points coupons orders likes recent),account,must,yes,no,S16
+Address book management,account,must,yes,no,S16
+Recently viewed products,account,should,yes,no,
+Level calculation from 3-year purchases with 12-month weighting,account,should,yes,no,배치 작업
+Monthly level coupons and birthday coupon,account,should,yes,no,스케줄러
+Restock alert per option,engagement,should,yes,no,S08 S25
+Price drop notification for liked items,engagement,could,unknown,no,글로벌 앱 설명 기준
+Notification inbox and push,engagement,should,yes,no,S25
+Size recommendation from purchase history or body measurements,product,should,yes,no,실측 비교; 브랜드 실측 데이터 필요
+Measured-size (실측) filter,discovery,should,yes,no,
+Cumulative sales and view counts on product page,product,should,yes,no,
+Card benefit banner on product page,product,could,yes,no,제휴 없이는 정적 안내
+Related products and complete-the-look on product page,product,should,yes,no,
+Snap feed (following recommended brand),snap,should,yes,no,S21
+Snap post with photos product tags and hashtags,snap,should,yes,no,S23
+Snap like comment and follow,snap,should,yes,no,S22 S24
+Snap product tag sheet linking to product,snap,should,yes,no,F07
+Snap moderation queue (pending visible blinded),snap,should,yes,no,AI 검수 대신 수동
+Brand coupon download on brand page,discovery,could,yes,no,S07
+Monthly ranking archive,discovery,could,yes,no,
+Review king weekly/monthly leaderboard,reviews,could,yes,no,
+Customer center FAQ and 1:1 inquiry,support,should,yes,no,S26
+Gift (선물하기) with recipient-entered address,checkout,could,yes,no,무신사 자체 절차 미확인
+Partner login and brand onboarding application,partner,should,yes,no,P01
+Partner product registration with options stock images size chart,partner,should,yes,no,P02
+Partner order processing and tracking number input,partner,should,yes,no,P03
+Partner claim approval (exchange return),partner,should,yes,no,P03
+Partner settlement report,partner,could,yes,no,P04; 수수료율 미확인
+Multi-store tabs (beauty outlet boutique kids player sneakers),discovery,could,yes,skip,별도 사업 단위; 탭 구조만
+Musinsa Pay (own easy payment with biometrics),checkout,could,yes,skip,전자금융업 필요; PG로 대체
+Musinsa Money gift voucher,checkout,could,yes,skip,상품권 발행 사업
+Live commerce (무신사 라이브),content,could,yes,skip,운영 조직 필요
+Raffle for limited drops,content,could,yes,skip,이벤트 운영
+Magazine and editorial content,content,could,yes,skip,콘텐츠 제작
+Offline store integration and offline review points,offline,could,yes,skip,매장 없음
+Global shipping with duties,global,could,yes,skip,법률·물류 범위 밖
+Used goods marketplace (유즈드),marketplace,could,yes,skip,별도 서비스
+Brand and product catalogue data itself,data,must,yes,skip,무신사 소유; 파트너 센터로 채움
