@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>구매대행 사전 검사</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">PC</span><span>구매대행 사전 검사</span></div>
+      <span class="spacer"></span>
+      <span class="small muted" id="aiState"></span>
+    </div>
+  </header>
+  <main>
+    <div class="grid-2">
+      <form class="card stack" id="form">
+        <h2>상품 정보</h2>
+        <label class="field"><span>API 키</span><input class="input mono" name="key" autocomplete="off" required></label>
+        <label class="field"><span>상품명 (원문 그대로 가능)</span><input class="input" name="title" required maxlength="500" placeholder="예: 耐克同款 运动鞋 男款"></label>
+        <label class="field"><span>상품 설명</span><textarea class="input" name="description" rows="6" maxlength="20000"></textarea></label>
+        <div class="row">
+          <label class="field" style="flex:1"><span>원산국</span>
+            <select class="input" name="source_country"><option value="CN">중국</option><option value="JP">일본</option><option value="US">미국</option><option value="EU">유럽</option><option value="OTHER">기타</option></select>
+          </label>
+        </div>
+        <label class="field"><span>이미지 주소 (한 줄에 하나, 최대 4개)</span><textarea class="input mono" name="image_urls" rows="3"></textarea></label>
+        <label class="check"><input type="checkbox" name="food_agency_registered"> 수입식품등 인터넷 구매대행업 영업등록을 했습니다</label>
+        <div><button class="btn btn-primary" id="run">검사하기</button></div>
+        <p class="small faint">자동 검사는 판매 가능 여부를 보장하지 않습니다. "확인 필요" 표시가 있는 항목은 법령 원문으로 다시 확인하세요.</p>
+      </form>
+      <section id="result" class="stack"><div class="card empty">왼쪽에 상품 정보를 넣고 검사하세요.</div></section>
+    </div>
+  </main>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

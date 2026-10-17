@@ -1,0 +1,15 @@
+{
+  "name": "precheck",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "구매대행 상품 등록 전 사전 검사 (상표권·KC·식품/의약품·통관 금지품목)",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0"
+  },
+  "engines": { "node": ">=20" }
+}
