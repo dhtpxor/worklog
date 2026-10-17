@@ -36,7 +36,7 @@ Date: 2026-10-17 · 입력: `replica/recon.md`, `replica/features.csv`, `replica
 | 배송 조회 | 스마트택배(sweettracker) 공개 API | 택배사 공통 조회. 도착 예정일·지연 판정의 근거 |
 | jobs | Vercel Cron | 배송 추적 갱신, 지연 보상, 적립금 소멸, 30일 최저가 집계, 후기 요청 메일 |
 | files | Supabase Storage | 상품 이미지·후기 사진·실측 사진 |
-| hosting | Vercel + otorimall.com | 사용자 확인: 2026-10-16 구매. 등록처·DNS 관리 위치는 미확인 |
+| hosting | Vercel + otorimall.com | 2026-10-16 가비아에서 구매(사용자 확인). DNS는 가비아 DNS 관리에서 레코드만 추가하는 방식 기본 |
 
 하나의 DB, 마이크로서비스 없음. 도매매 공급 정보(공급가·상품번호)는 관리자 전용 테이블로만 둔다.
 
@@ -118,7 +118,11 @@ Jobs (Vercel Cron):
 ## 6. 사용자 확인 필요
 
 - 저장소: `dhtpxor/otorimall`이 GitHub에 없음. 빌드 단계 전에 만들어서 Claude GitHub App에 허용해 주시거나, worklog 안의 하위 폴더로 갈지 결정.
-- 도메인: otorimall.com은 2026-10-16 구매(사용자 확인). deploy 전에 등록처와 DNS 관리 권한(네임서버를 Vercel로 넘길지, A/CNAME만 바꿀지) 확인.
+- 도메인: otorimall.com, 2026-10-16 가비아에서 구매(사용자 확인). deploy 계획:
+  - 네임서버는 가비아에 그대로 두고, 가비아 "DNS 관리"에서 Vercel이 프로젝트 도메인 설정 화면에 보여주는 레코드(루트 @ 는 A, www 는 CNAME)를 그대로 입력한다. 값은 Vercel 화면 기준으로 넣고 기억에 의존하지 않는다.
+  - 메일 발송(Resend)용 SPF·DKIM·DMARC TXT 레코드도 같은 가비아 화면에서 추가한다.
+  - 가비아 기본 제공 "도메인 연결/포워딩"이나 파킹이 켜져 있으면 끈다(같은 이름의 A 레코드와 충돌).
+  - 미확인: 가비아 계정의 DNS 관리 사용 여부(호스팅 상품 없이도 무료 DNS가 켜져 있는지), 도메인 잠금 상태.
 - 사업자등록·통신판매업 신고 예정 시점(토스 계약·실결제·알림톡의 선행 조건).
 - 카카오 로그인 사용 여부(카카오 개발자 앱 등록 필요).
 - 공급처(도매매) 상세 이미지의 재호스팅 허용 범위.
