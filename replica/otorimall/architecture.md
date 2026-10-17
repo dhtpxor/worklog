@@ -36,7 +36,7 @@ Date: 2026-10-17 · 입력: `replica/recon.md`, `replica/features.csv`, `replica
 | 배송 조회 | 스마트택배(sweettracker) 공개 API | 택배사 공통 조회. 도착 예정일·지연 판정의 근거 |
 | jobs | Vercel Cron | 배송 추적 갱신, 지연 보상, 적립금 소멸, 30일 최저가 집계, 후기 요청 메일 |
 | files | Supabase Storage | 상품 이미지·후기 사진·실측 사진 |
-| hosting | Vercel + otorimall.com | 사용자가 도메인을 보유한 것으로 가정(확인 필요) |
+| hosting | Vercel + otorimall.com | 사용자 확인: 2026-10-16 구매. 등록처·DNS 관리 위치는 미확인 |
 
 하나의 DB, 마이크로서비스 없음. 도매매 공급 정보(공급가·상품번호)는 관리자 전용 테이블로만 둔다.
 
@@ -118,7 +118,7 @@ Jobs (Vercel Cron):
 ## 6. 사용자 확인 필요
 
 - 저장소: `dhtpxor/otorimall`이 GitHub에 없음. 빌드 단계 전에 만들어서 Claude GitHub App에 허용해 주시거나, worklog 안의 하위 폴더로 갈지 결정.
-- 도메인: otorimall.com 소유 여부와 등록처(DNS 변경 권한).
+- 도메인: otorimall.com은 2026-10-16 구매(사용자 확인). deploy 전에 등록처와 DNS 관리 권한(네임서버를 Vercel로 넘길지, A/CNAME만 바꿀지) 확인.
 - 사업자등록·통신판매업 신고 예정 시점(토스 계약·실결제·알림톡의 선행 조건).
 - 카카오 로그인 사용 여부(카카오 개발자 앱 등록 필요).
 - 공급처(도매매) 상세 이미지의 재호스팅 허용 범위.
