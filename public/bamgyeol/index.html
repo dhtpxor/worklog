@@ -160,7 +160,7 @@ input[type=range]{flex:1;min-width:0;accent-color:var(--accent)}
     </div>
   </section>
 
-  <p class="foot">소리는 휴대폰 스피커에 맞춰 실시간으로 만들어집니다(핑크·브라운·백색 소음은 정의 자체가 합성 소음이라 녹음과 차이가 없습니다). 이 앱은 약을 대신하지 못합니다.</p>
+  <p class="foot">모든 소리는 핑크·브라운·백색 소음을 다듬어 휴대폰 스피커에 맞춰 실시간으로 만듭니다. 이 앱은 약을 대신하지 못합니다.</p>
 </div>
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="플레이어">
@@ -223,10 +223,30 @@ function streaks(c,r,n,col,len,ang=0,a=.25,w=1){c.save();c.strokeStyle=rgba(col,
 function finish(c,r){const g=c.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,W*.75);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.45)');c.fillStyle=g;c.fillRect(0,0,W,H);for(let i=0;i<2200;i++){c.fillStyle=r()<.5?'rgba(255,255,255,.035)':'rgba(0,0,0,.05)';c.fillRect(r()*W,r()*H,1,1)}}
 
 const PAINT={
- rain(c,r){bg(c,[[0,'#21384a'],[1,'#0b151c']]);hills(c,r,230,30,'#162a36',.8);hills(c,r,270,20,'#0e1d26');bokeh(c,r,46,[[255,186,110],[255,214,150],[140,200,255],[255,150,90]],5,16,250,420,.7);
-  c.save();for(let i=0;i<170;i++){const x=r()*W,y=r()*H,l=4+r()*30;c.strokeStyle='rgba(200,225,245,.18)';c.lineWidth=1;c.beginPath();c.moveTo(x,y);c.lineTo(x+(r()-.5)*3,y+l);c.stroke();c.fillStyle='rgba(225,240,255,.55)';c.beginPath();c.ellipse(x,y+l,1.6+r()*2,2+r()*2.4,0,0,7);c.fill()}c.restore()},
  pink(c,r){bg(c,[[0,'#3a1240'],[1,'#12071a']]);silk(c,r,{rgb:[255,150,200],n:70,yc:120,amp:60,k:.008,a:.07});silk(c,r,{rgb:[255,200,170],n:50,yc:240,amp:50,k:.011,a:.06})},
  brown(c,r){bg(c,[[0,'#2e1c10'],[1,'#0e0805']]);silk(c,r,{rgb:[220,150,90],n:70,yc:150,amp:55,k:.007,a:.07,w:1.5});silk(c,r,{rgb:[160,100,60],n:60,yc:260,amp:40,k:.012,a:.07})},
+ fan(c,r){bg(c,[[0,'#1d2638'],[1,'#0a0e16']]);c.save();c.translate(W/2,H/2);c.globalCompositeOperation='lighter';for(let i=0;i<36;i++){c.rotate(Math.PI*2/36);c.fillStyle='rgba(170,200,240,.06)';c.beginPath();c.ellipse(0,-90,40,95,0,0,7);c.fill()}c.restore();for(let i=1;i<6;i++){c.strokeStyle='rgba(200,220,255,.12)';c.beginPath();c.arc(W/2,H/2,i*36,0,7);c.stroke()}c.fillStyle='#2b354a';c.beginPath();c.arc(W/2,H/2,22,0,7);c.fill()},
+ plane(c,r){bg(c,[[0,'#2c3c70'],[.55,'#c8919a'],[1,'#f2c99c']]);c.save();c.globalCompositeOperation='lighter';for(let i=0;i<34;i++)glow(c,r()*W,260+r()*170,50+r()*80,[255,232,220],.28);c.restore();
+  c.beginPath();c.moveTo(W,250);c.lineTo(240,330);c.lineTo(250,345);c.lineTo(W,300);c.closePath();c.fillStyle='#1b2036';c.fill();c.strokeStyle='rgba(255,220,200,.35)';c.beginPath();c.moveTo(W,250);c.lineTo(240,330);c.stroke()},
+ rain(c,r){bg(c,[[0,'#21384a'],[1,'#0b151c']]);hills(c,r,230,30,'#162a36',.8);hills(c,r,270,20,'#0e1d26');bokeh(c,r,46,[[255,186,110],[255,214,150],[140,200,255],[255,150,90]],5,16,250,420,.7);
+  c.save();for(let i=0;i<170;i++){const x=r()*W,y=r()*H,l=4+r()*30;c.strokeStyle='rgba(200,225,245,.18)';c.lineWidth=1;c.beginPath();c.moveTo(x,y);c.lineTo(x+(r()-.5)*3,y+l);c.stroke();c.fillStyle='rgba(225,240,255,.55)';c.beginPath();c.ellipse(x,y+l,1.6+r()*2,2+r()*2.4,0,0,7);c.fill()}c.restore()},
+ tent(c,r){bg(c,[[0,'#132a26'],[1,'#060e0c']]);pines(c,r,300,14,'#0b1a17',120,230);glow(c,260,330,190,[255,170,80],.55);
+  c.beginPath();c.moveTo(260,170);c.lineTo(120,380);c.lineTo(400,380);c.closePath();const g=c.createLinearGradient(0,170,0,380);g.addColorStop(0,'#3f5a48');g.addColorStop(1,'#1d2e25');c.fillStyle=g;c.fill();
+  c.beginPath();c.moveTo(260,230);c.lineTo(222,380);c.lineTo(298,380);c.closePath();c.fillStyle='#ffbf6e';c.fill();glow(c,260,350,90,[255,200,120],.6);hills(c,r,378,4,'#07100d');streaks(c,r,260,[190,220,210],26,.12,.22)},
+ thunder(c,r){bg(c,[[0,'#1d1b36'],[1,'#08080f']]);c.save();c.globalCompositeOperation='lighter';for(let i=0;i<26;i++)glow(c,r()*W,r()*200,60+r()*90,[110,105,160],.22);c.restore();
+  let x=180+r()*160,y=0;c.save();c.shadowColor='#cfe0ff';c.shadowBlur=28;c.strokeStyle='#f4f8ff';c.lineWidth=3;c.beginPath();c.moveTo(x,y);while(y<300){x+=(r()-.5)*46;y+=18+r()*20;c.lineTo(x,y)}c.stroke();c.restore();glow(c,x,150,220,[180,190,255],.18);hills(c,r,330,18,'#0a0a12');streaks(c,r,300,[200,205,230],34,.2,.2)},
+ waves(c,r){bg(c,[[0,'#bfa3cc'],[.3,'#e7a3ad'],[.45,'#f5c39c'],[.46,'#5d8796'],[1,'#122f3a']]);glow(c,340,190,110,[255,225,160],.9);hills(c,r,186,7,'#6a5875',.6);
+  for(let i=0;i<70;i++){const y=196+Math.pow(i/70,1.6)*240;c.beginPath();for(let x=0;x<=W;x+=5){const yy=y+Math.sin(x*.02+i*1.3)*(1+i*.08)+Math.sin(x*.05+i)*(.5+i*.03);x?c.lineTo(x,yy):c.moveTo(x,yy)}c.strokeStyle=i%3?`rgba(255,200,200,${.1+r()*.12})`:`rgba(230,250,255,${.15+r()*.15})`;c.lineWidth=1+i*.04;c.stroke()}},
+ stream(c,r){bg(c,[[0,'#24463c'],[1,'#0a1814']]);pines(c,r,220,16,'#13281f',80,190);hills(c,r,210,12,'#0f211b');const g=c.createLinearGradient(0,230,0,H);g.addColorStop(0,'#3d7a74');g.addColorStop(1,'#0f2a28');c.fillStyle=g;c.fillRect(0,232,W,H);
+  for(let i=0;i<120;i++){const x=r()*W,y=240+r()*190,l=10+r()*50;c.strokeStyle=rgba([220,255,250],.12+r()*.25);c.lineWidth=1;c.beginPath();c.moveTo(x,y);c.quadraticCurveTo(x+l/2,y-3,x+l,y);c.stroke()}for(let i=0;i<7;i++){c.fillStyle='#0b1714';c.beginPath();c.ellipse(r()*W,300+r()*120,20+r()*40,8+r()*14,0,0,7);c.fill()}},
+ wind(c,r){bg(c,[[0,'#a9c5cc'],[.6,'#d6d6c2'],[1,'#c8b48c']]);hills(c,r,250,24,'#a8b48c',.6);hills(c,r,300,18,'#8e9c6e');silk(c,r,{rgb:[255,255,255],n:40,yc:90,amp:40,k:.006,a:.14,w:1,dy:2.5});silk(c,r,{rgb:[255,255,240],n:30,yc:300,amp:30,k:.009,a:.12,w:1,dy:3})},
+ snow(c,r){bg(c,[[0,'#2a3756'],[1,'#121827']]);glow(c,120,80,140,[200,215,255],.2);pines(c,r,330,18,'#0b111f',100,220);const g=c.createLinearGradient(0,320,0,H);g.addColorStop(0,'#c9d3ea');g.addColorStop(1,'#7f8aa8');c.fillStyle=g;c.beginPath();c.moveTo(0,H);c.lineTo(0,335);c.quadraticCurveTo(W/2,310,W,340);c.lineTo(W,H);c.fill();for(let i=0;i<220;i++){c.fillStyle=rgba([255,255,255],.4+r()*.6);c.beginPath();c.arc(r()*W,r()*H,r()*2.2+.4,0,7);c.fill()}},
+ campfire(c,r){bg(c,[[0,'#0c0c1c'],[1,'#1c100a']]);stars(c,r,90,200);glow(c,260,320,240,[255,130,50],.65);hills(c,r,370,6,'#120a07');
+  c.save();c.globalCompositeOperation='lighter';for(let i=0;i<9;i++){const x=260+(r()-.5)*70,h=90+r()*110,w=20+r()*26;const g=c.createLinearGradient(0,350-h,0,360);g.addColorStop(0,'rgba(255,240,170,0)');g.addColorStop(.4,'rgba(255,190,80,.5)');g.addColorStop(1,'rgba(255,90,30,.6)');c.fillStyle=g;c.beginPath();c.moveTo(x,350-h);c.bezierCurveTo(x+w,330-h*.4,x+w,360,x,362);c.bezierCurveTo(x-w,360,x-w,330-h*.4,x,350-h);c.fill()}c.restore();
+  c.fillStyle='#2a1810';c.save();c.translate(260,368);c.rotate(.25);c.fillRect(-80,-8,160,16);c.rotate(-.5);c.fillRect(-80,-8,160,16);c.restore();for(let i=0;i<40;i++){c.fillStyle=rgba([255,200,120],.4+r()*.6);c.fillRect(200+r()*120,120+r()*200,1.5,1.5)}},
+ train(c,r){bg(c,[[0,'#0a0d18'],[1,'#05070d']]);c.save();c.beginPath();c.roundRect(46,56,428,270,30);c.clip();bg(c,[[0,'#1c2b4c'],[1,'#0b1226']]);hills(c,r,250,20,'#0a1020');
+  c.globalCompositeOperation='lighter';for(let i=0;i<60;i++){const y=160+r()*150,x=r()*W,l=60+r()*200,col=r()<.6?[255,190,120]:[150,190,255];const g=c.createLinearGradient(x,0,x+l,0);g.addColorStop(0,rgba(col,0));g.addColorStop(.7,rgba(col,.5));g.addColorStop(1,rgba(col,0));c.strokeStyle=g;c.lineWidth=1+r()*2.5;c.beginPath();c.moveTo(x,y);c.lineTo(x+l,y);c.stroke()}c.restore();
+  c.strokeStyle='rgba(255,255,255,.08)';c.lineWidth=2;c.beginPath();c.roundRect(46,56,428,270,30);c.stroke();glow(c,140,110,120,[255,255,255],.05);c.fillStyle='#0d101c';c.fillRect(0,350,W,H-350)},
  white(c,r){bg(c,[[0,'#1d2638'],[1,'#0a0e16']]);c.save();c.translate(W/2,H/2);c.globalCompositeOperation='lighter';for(let i=0;i<36;i++){c.rotate(Math.PI*2/36);c.fillStyle='rgba(170,200,240,.06)';c.beginPath();c.ellipse(0,-90,40,95,0,0,7);c.fill()}c.restore();for(let i=1;i<6;i++){c.strokeStyle='rgba(200,220,255,.12)';c.beginPath();c.arc(W/2,H/2,i*36,0,7);c.stroke()}c.fillStyle='#2b354a';c.beginPath();c.arc(W/2,H/2,22,0,7);c.fill()}
 };
 const artCache={};
@@ -251,14 +271,31 @@ const S={
  pink:{t:'핑크 노이즈',s:'낮은 소리가 더 큰 부드러운 소음',ev:'소규모 연구에서 깊은 수면 소폭 증가 · 2026년 연구에선 렘수면 감소',b(n,o){ch(noise(n,'pink'),G(.9),o)}},
  brown:{t:'브라운 노이즈',s:'더 낮고 묵직한 소음',ev:'핑크 노이즈와 같은 계열 · 직접 검증한 연구는 거의 없음',b(n,o){ch(noise(n,'brown'),F('lowpass',700),G(1),o)}},
  white:{t:'백색 소음',s:'모든 높이가 고른 소음',ev:'38개 연구 종합: 근거의 질 매우 낮음 · 수면이 더 끊긴 연구도 있음',b(n,o){ch(noise(n,'white'),F('lowpass',6000),G(.45),o)}},
- rain:{t:'빗소리',s:'핑크 노이즈를 빗소리처럼 다듬은 것',ev:'주변 소음을 덮는 용도 · 수면 개선을 입증한 임상시험은 없음',b(n,o){ch(noise(n,'pink'),F('highpass',400),F('lowpass',6000),G(.85),o);drops(n,o,{});ch(noise(n,'brown'),F('lowpass',220),G(.35),o)}}
+ fan:{t:'선풍기',s:'백색 소음을 선풍기처럼 다듬은 것',ev:'백색 소음과 같음 · 소음 가림용',b(n,o){ch(noise(n,'white'),F('lowpass',3500),G(.4),o);ch(noise(n,'brown'),F('lowpass',300),G(.4),o)}},
+ plane:{t:'비행기 기내',s:'낮게 깔리는 엔진 소리',ev:'브라운 소음 계열 · 소음 가림용',b(n,o){ch(noise(n,'brown'),F('lowpass',420),G(.95),o);const g=G(.22);ch(noise(n,'pink'),F('bandpass',1000,.4),g,o);lfo(n,.03,.04,g.gain,.22)}},
+ rain:{t:'빗소리',s:'창가에 내리는 비',ev:'핑크 소음 계열 · 수면 개선을 입증한 임상시험은 없음',b(n,o){ch(noise(n,'pink'),F('highpass',400),F('lowpass',6000),G(.85),o);drops(n,o,{});ch(noise(n,'brown'),F('lowpass',220),G(.35),o)}},
+ tent:{t:'텐트 위로 떨어지는 비',s:'톡톡 두드리는 빗방울',ev:'빗소리와 같음 · 소음 가림용',b(n,o){ch(noise(n,'pink'),F('lowpass',2400),G(.55),o);drops(n,o,{f:1300,q:4,vol:.55,min:25,max:130,dur:.04})}},
+ thunder:{t:'먼 천둥과 폭우',s:'굵은 빗줄기',ev:'핑크 소음 계열 · 가장 강하게 소음을 덮음',b(n,o){ch(noise(n,'pink'),F('highpass',300),F('lowpass',8000),G(1),o);drops(n,o,{vol:.35,min:20,max:90});
+  loop(n,()=>{const t=ctx.currentTime,s=ctx.createBufferSource();s.buffer=bufs.brown;const lp=F('lowpass',700);const g=G(0);ch(s,lp,g,o);lp.frequency.setValueAtTime(700,t);lp.frequency.exponentialRampToValueAtTime(140,t+5);const d=rr(4,7);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(rr(.9,1.6),t+.4);g.gain.setTargetAtTime(0,t+.6,d/3);s.start(t,Math.random()*3);s.stop(t+d+2);return rr(18000,40000)},8000)}},
+ waves:{t:'잔잔한 파도소리',s:'느리게 밀려오는 파도',ev:'핑크 소음을 파도 리듬으로 흔든 것 · 수면 연구 없음',b(n,o){const g=G(.2);ch(noise(n,'pink'),F('lowpass',900),g,o);const g2=G(0);ch(noise(n,'white'),F('bandpass',2200,.6),g2,o);
+  loop(n,()=>{const t=ctx.currentTime,d=rr(5,8);g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(g.gain.value,t);g.gain.linearRampToValueAtTime(.95,t+d*.45);g.gain.linearRampToValueAtTime(.2,t+d);g2.gain.cancelScheduledValues(t);g2.gain.setValueAtTime(0,t+d*.3);g2.gain.linearRampToValueAtTime(.45,t+d*.5);g2.gain.linearRampToValueAtTime(0,t+d*.95);return(d+rr(1,3))*1000},10)}},
+ stream:{t:'계곡 물소리',s:'흐르는 물',ev:'백색·브라운 소음 계열 · 수면 연구 없음',b(n,o){const bp=F('bandpass',1800,.8);const g=G(.5);ch(noise(n,'white'),bp,g,o);ch(noise(n,'brown'),F('lowpass',350),G(.6),o);lfo(n,.9,400,bp.frequency,1800);lfo(n,.25,.12,g.gain,.5)}},
+ wind:{t:'초원을 스치는 바람',s:'느린 숨결처럼 오르내림',ev:'핑크 소음 계열 · 수면 연구 없음',b(n,o){const bp=F('bandpass',500,.7);const g=G(.9);ch(noise(n,'pink'),bp,g,o);lfo(n,.08,350,bp.frequency,500);lfo(n,.05,.35,g.gain,.55)}},
+ snow:{t:'눈 내리는 밤',s:'소리가 잦아든 고요함',ev:'아주 낮은 브라운 소음 · 수면 연구 없음',b(n,o){const bp=F('bandpass',350,.5);const g=G(.4);ch(noise(n,'brown'),bp,g,o);lfo(n,.04,150,bp.frequency,350);lfo(n,.07,.15,g.gain,.4);ch(noise(n,'white'),F('highpass',6000),G(.025),o)}},
+ campfire:{t:'모닥불 앞에서',s:'타닥타닥 장작',ev:'소음 가림용 · 수면 연구 없음',b(n,o){ch(noise(n,'brown'),F('lowpass',320),G(.55),o);ch(noise(n,'pink'),F('bandpass',700,.7),G(.12),o);
+  loop(n,()=>{const pop=Math.random()<.07;burst(o,{f:pop?rr(700,1200):rr(1500,5000),q:rr(1,4),dur:pop?.07:rr(.008,.035),vol:pop?.8:rr(.1,.45),pan:rr(-.5,.5)});return Math.random()<.3?rr(15,40):rr(60,320)})}},
+ train:{t:'밤기차 창가',s:'덜컹이는 일정한 리듬',ev:'브라운 소음에 리듬을 더한 것 · 수면 연구 없음',b(n,o){const g=G(.8);ch(noise(n,'brown'),F('lowpass',260),g,o);lfo(n,.13,.15,g.gain,.8);ch(noise(n,'pink'),F('bandpass',800,.6),G(.12),o);
+  loop(n,()=>{const t=ctx.currentTime;[0,.17,1.05,1.22].forEach((d,i)=>burst(o,{t:t+d,f:i%2?1300:1600,q:2,dur:.06,vol:i%2?.35:.5,src:'pink'}));return 2200})}}
 };
 const CATS=[
- {t:'주변 소음 가리기',sub:'소음 때문에 깨는 걸 줄이는 용도. 수면 자체를 깊게 한다는 근거는 아직 약합니다',ids:['pink','brown','white','rain']}
+ {t:'기본 소음',sub:'연구에 쓰인 소음 그대로',ids:['pink','brown','white','fan','plane']},
+ {t:'비 오는 밤',sub:'핑크 소음을 빗소리로 다듬은 것',ids:['rain','tent','thunder']},
+ {t:'자연 속으로',ids:['waves','stream','wind','snow']},
+ {t:'잠들지 못하는 밤',sub:'리듬이 있는 소리',ids:['campfire','train']}
 ];
 const ORDER=CATS.flatMap(c=>c.ids);
 const catOf=id=>CATS.find(c=>c.ids.includes(id)).t;
-const TAG={pink:'소규모 연구',brown:'연구 거의 없음',white:'근거 매우 낮음',rain:'소음 가림용'};
+const TAG={pink:'소규모 연구',brown:'연구 거의 없음',white:'근거 매우 낮음'};
 
 function makeBufs(){const len=ctx.sampleRate*4;['white','pink','brown'].forEach(type=>{const b=ctx.createBuffer(2,len,ctx.sampleRate);for(let c=0;c<2;c++){const d=b.getChannelData(c);let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,last=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;if(type==='white')d[i]=w*.5;else if(type==='brown'){last=(last+.02*w)/1.02;d[i]=last*3.5}else{b0=.99886*b0+w*.0555179;b1=.99332*b1+w*.0750759;b2=.969*b2+w*.153852;b3=.8665*b3+w*.3104856;b4=.55*b4+w*.5329522;b5=-.7616*b5-w*.016898;d[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11;b6=w*.115926}}}bufs[type]=b})}
 function silentWav(){const sr=8000,len=sr,b=new ArrayBuffer(44+len*2),v=new DataView(b),w=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));w(0,'RIFF');v.setUint32(4,36+len*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,len*2,true);return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
@@ -301,7 +338,7 @@ const tiles=[...document.querySelectorAll('.tile')];const paintQ=tiles.slice();(
 
 const hour=new Date().getHours();
 const heroId=store.get('sel','pink');
-$('greet').textContent='소음을 가리는 네 가지 소리. 근거는 있는 만큼만 적었습니다';
+$('greet').textContent='소음을 가리는 열네 가지 소리. 근거는 있는 만큼만 적었습니다';
 $('hero').style.backgroundImage=`url(${art(heroId)})`;$('heroT').textContent=S[heroId].t;$('heroS').textContent=S[heroId].s;
 $('hero').onclick=()=>{if(sel===heroId&&playing)openSheet();else play(heroId)};
 
