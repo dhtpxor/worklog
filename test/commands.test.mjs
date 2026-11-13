@@ -143,3 +143,20 @@ test("메일 수집 → 후보", async () => {
   assert.equal(gas.tasks[0].due, "2026-09-30");
   assert.equal(gas.state.mail_last_uid, "10");
 });
+
+test("받는 메일 계정이 바뀌면 처음부터 다시 읽음", async () => {
+  const { gas, works } = await setup();
+  gas.state.mail_last_uid = "5000"; gas.state.mail_account = "me@wise.co.kr@imap.mailplug.co.kr";
+  let asked = null;
+  const fetchMail = async ({ lastUid }) => { asked = lastUid; return { maxUid: 3, messages: [
+    { uid: 3, subject: "보고서 제출 요청", from: "b@x.com", fromName: "B기관", date: "2026-11-13T00:00:00Z", text: "11/20까지 보고서 제출 부탁드립니다." },
+  ] }; };
+  const c2 = { ...cfg, IMAP_ENABLED: true, SMTP_ENABLED: true, IMAP_HOST: "imap.gmail.com", IMAP_USER: "ost850914@gmail.com", SMTP_USER: "ost850914@gmail.com" };
+  await runTick({ gas, works, cfg: c2, fetchMail, now: new Date("2026-11-13T03:00:00Z") });
+  assert.equal(asked, 0);
+  assert.equal(gas.state.mail_last_uid, "3");
+  assert.equal(gas.state.mail_account, "ost850914@gmail.com@imap.gmail.com");
+  // 같은 계정이면 이어서 읽음
+  await runTick({ gas, works, cfg: c2, fetchMail, now: new Date("2026-11-13T04:00:00Z") });
+  assert.equal(asked, 3);
+});
